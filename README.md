@@ -1,27 +1,37 @@
-# DynamicFormBuilder
+🧩 Dynamic Form Builder
+This project is a dynamic form builder built with Angular. It allows users to dynamically add various types of form fields such as text inputs, textareas, dropdowns, checkboxes, and radio buttons. Fields can be customized with labels, placeholders, and validations. On submission, the form data is logged to the console and a success message is displayed.
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 14.2.13.
+🚀 Features
+Dynamic Field Addition: Add multiple form fields of various types on the fly.
 
-## Development server
+Field Customization: Configure label, placeholder, and validations for each field.
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+Live Form Preview: See the form updating dynamically as you add/remove fields.
 
-## Code scaffolding
+Form Validation: Basic validation support (e.g., required fields).
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+Form Submission: Logs form data to console and displays a success message.
 
-## Build
+Responsive UI: Clean, user-friendly Bootstrap-based interface.
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+Modular Code: Separated into components and services for better maintainability.
 
-## Running unit tests
+🛠️ Installation & Setup
+Prerequisites
+Node.js (v14+)
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+Angular CLI (v14+ recommended)
 
-## Running end-to-end tests
+Steps
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+Clone the repository
+git clone https://github.com/Saurabh-kshirsagar/dynamic-form-builder.git
+cd dynamic-form-builder
 
-## Further help
+Install dependencies
+npm install
+Run the development server
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+ng serve
+Open in browser
+
