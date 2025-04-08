@@ -1,153 +1,107 @@
-<div class="container">
-    <div class="card mt-4">
-      <div class="card-header bg-primary text-white">
-        <h4>Form Field Builder</h4>
-      </div>
-      <div class="card-body">
-        <form [formGroup]="fieldForm">
-          <!-- Field Type -->
-          <div class="mb-3">
-            <label for="fieldType" class="form-label">Field Type</label>
-            <select 
-              id="fieldType" 
-              formControlName="type" 
-              class="form-select">
-              <option *ngFor="let type of fieldTypes" [value]="type">{{ type | titlecase }}</option>
-            </select>
-          </div>
-          
-          <!-- Field Label -->
-          <div class="mb-3">
-            <label for="fieldLabel" class="form-label">Label</label>
-            <input 
-              type="text" 
-              id="fieldLabel" 
-              formControlName="label" 
-              class="form-control" 
-              placeholder="Enter field label">
-          </div>
-          
-          <!-- Field Placeholder -->
-          <div class="mb-3">
-            <label for="fieldPlaceholder" class="form-label">Placeholder</label>
-            <input 
-              type="text" 
-              id="fieldPlaceholder" 
-              formControlName="placeholder" 
-              class="form-control" 
-              placeholder="Enter placeholder text">
-          </div>
-          
-          <!-- Options (for dropdown, checkbox, radio) -->
-          <div *ngIf="hasOptions" class="mb-3 p-3 border rounded">
-            <h5>Options</h5>
-            
-            <div class="row">
-              <div class="col-md-5">
-                <input 
-                  type="text" 
-                  formControlName="optionLabel" 
-                  class="form-control" 
-                  placeholder="Option Label">
-              </div>
-              <div class="col-md-5">
-                <input 
-                  type="text" 
-                  formControlName="optionValue" 
-                  class="form-control" 
-                  placeholder="Option Value">
-              </div>
-              <div class="col-md-2">
-                <button 
-                  type="button" 
-                  class="btn btn-sm btn-success" 
-                  (click)="addOption()">
-                  Add
-                </button>
-              </div>
+<div class="container py-4">
+  <div class="card shadow-sm border-0">
+    <div class="card-header bg-primary text-white d-flex align-items-center">
+      <i class="bi bi-tools me-2 fs-5"></i>
+      <h4 class="mb-0">Form Field Builder</h4>
+    </div>
+
+    <div class="card-body">
+      <form [formGroup]="fieldForm">
+        
+        <!-- Field Type -->
+        <div class="mb-4">
+          <label for="fieldType" class="form-label fw-semibold">Field Type</label>
+          <select id="fieldType" formControlName="type" class="form-select">
+            <option *ngFor="let type of fieldTypes" [value]="type">{{ type | titlecase }}</option>
+          </select>
+        </div>
+
+        <!-- Label -->
+        <div class="mb-4">
+          <label for="fieldLabel" class="form-label fw-semibold">Field Label</label>
+          <input type="text" id="fieldLabel" formControlName="label" class="form-control" placeholder="e.g., Full Name">
+        </div>
+
+        <!-- Placeholder -->
+        <div class="mb-4">
+          <label for="fieldPlaceholder" class="form-label fw-semibold">Placeholder</label>
+          <input type="text" id="fieldPlaceholder" formControlName="placeholder" class="form-control" placeholder="e.g., Enter your name">
+        </div>
+
+        <!-- Options -->
+        <div *ngIf="hasOptions" class="mb-4 border rounded p-3 bg-light">
+          <h5 class="mb-3"><i class="bi bi-list-check me-2 text-primary"></i>Field Options</h5>
+          <div class="row g-2 align-items-end">
+            <div class="col-md-5">
+              <input type="text" formControlName="optionLabel" class="form-control" placeholder="Option Label">
             </div>
-            
-            <div *ngIf="options.length > 0" class="mt-3">
-              <div *ngFor="let option of options; let i = index" class="d-flex align-items-center mt-1">
-                <span class="me-auto">{{ option.label }} ({{ option.value }})</span>
-                <button 
-                  type="button" 
-                  class="btn btn-sm btn-danger" 
-                  (click)="removeOption(i)">
-                  Remove
-                </button>
-              </div>
+            <div class="col-md-5">
+              <input type="text" formControlName="optionValue" class="form-control" placeholder="Option Value">
+            </div>
+            <div class="col-md-2 text-end">
+              <button type="button" class="btn btn-success w-100" (click)="addOption()">
+                <i class="bi bi-plus-circle"></i> Add
+              </button>
             </div>
           </div>
-          
-          <!-- Validations -->
-          <div class="mb-3 p-3 border rounded">
-            <h5>Validations</h5>
-            
-            <div class="row mb-2">
-              <div class="col-md-3">
-                <select 
-                  formControlName="validationType" 
-                  class="form-select">
-                  <option value="">Select Validation</option>
-                  <option *ngFor="let vType of validationTypes" [value]="vType">{{ vType }}</option>
-                </select>
-              </div>
-              <div class="col-md-3">
-                <input 
-                  type="text" 
-                  formControlName="validationValue" 
-                  class="form-control" 
-                  placeholder="Value (if needed)">
-              </div>
-              <div class="col-md-4">
-                <input 
-                  type="text" 
-                  formControlName="validationMessage" 
-                  class="form-control" 
-                  placeholder="Error message">
-              </div>
-              <div class="col-md-2">
-                <button 
-                  type="button" 
-                  class="btn btn-sm btn-success" 
-                  (click)="addValidation()">
-                  Add
+
+          <div *ngIf="options.length > 0" class="mt-3">
+            <ul class="list-group list-group-flush">
+              <li *ngFor="let option of options; let i = index" class="list-group-item d-flex justify-content-between align-items-center">
+                <span>{{ option.label }} ({{ option.value }})</span>
+                <button type="button" class="btn btn-sm btn-outline-danger" (click)="removeOption(i)">
+                  <i class="bi bi-trash"></i> Remove
                 </button>
-              </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Validations -->
+        <div class="mb-4 border rounded p-3 bg-light">
+          <h5 class="mb-3"><i class="bi bi-shield-check me-2 text-primary"></i>Validation Rules</h5>
+          <div class="row g-2 align-items-end">
+            <div class="col-md-3">
+              <select formControlName="validationType" class="form-select">
+                <option value="">Select Validation</option>
+                <option *ngFor="let vType of validationTypes" [value]="vType">{{ vType }}</option>
+              </select>
             </div>
-            
-            <div *ngIf="validations.length > 0">
-              <div *ngFor="let validation of validations; let i = index" class="d-flex align-items-center mt-1">
-                <span class="me-auto">{{ validation.name }} {{ validation.value ? '(' + validation.value + ')' : '' }}</span>
-                <button 
-                  type="button" 
-                  class="btn btn-sm btn-danger" 
-                  (click)="removeValidation(i)">
-                  Remove
-                </button>
-              </div>
+            <div class="col-md-3">
+              <input type="text" formControlName="validationValue" class="form-control" placeholder="Value (if needed)">
+            </div>
+            <div class="col-md-4">
+              <input type="text" formControlName="validationMessage" class="form-control" placeholder="Error message">
+            </div>
+            <div class="col-md-2 text-end">
+              <button type="button" class="btn btn-success w-100" (click)="addValidation()">
+                <i class="bi bi-plus-circle"></i> Add
+              </button>
             </div>
           </div>
-          
-          <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-            <button 
-              type="button" 
-              class="btn btn-secondary me-md-2" 
-              (click)="resetForm()">
-              Reset
-            </button>
-            <button 
-              type="button" 
-              class="btn btn-primary" 
-              [disabled]="fieldForm.invalid" 
-              (click)="addField()">
-              Add Field
-            </button>
+
+          <div *ngIf="validations.length > 0" class="mt-3">
+            <ul class="list-group list-group-flush">
+              <li *ngFor="let validation of validations; let i = index" class="list-group-item d-flex justify-content-between align-items-center">
+                <span>{{ validation.name }}{{ validation.value ? ' (' + validation.value + ')' : '' }}</span>
+                <button type="button" class="btn btn-sm btn-outline-danger" (click)="removeValidation(i)">
+                  <i class="bi bi-trash"></i> Remove
+                </button>
+              </li>
+            </ul>
           </div>
-        </form>
-      </div>
+        </div>
+
+        <!-- Actions -->
+        <div class="text-end">
+          <button type="button" class="btn btn-outline-secondary me-2" (click)="resetForm()">
+            <i class="bi bi-arrow-repeat"></i> Reset
+          </button>
+          <button type="button" class="btn btn-primary" [disabled]="fieldForm.invalid" (click)="addField()">
+            <i class="bi bi-plus-circle"></i> Add Field
+          </button>
+        </div>
+      </form>
     </div>
   </div>
-  
-  
+</div>
