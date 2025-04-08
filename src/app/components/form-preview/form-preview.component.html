@@ -1,0 +1,131 @@
+<div class="container mb-5">
+    <div class="card mt-4">
+      <div class="card-header bg-success text-white">
+        <h4>Form Preview</h4>
+      </div>
+      <div class="card-body">
+        <div class="alert alert-info" *ngIf="formFields.length === 0">
+          No form fields added yet. Use the form builder above to add fields.
+        </div>
+        
+        <form [formGroup]="dynamicForm" (ngSubmit)="onSubmit()" *ngIf="formFields.length > 0">
+          <div *ngFor="let field of formFields" class="mb-3 position-relative">
+            <!-- Text Input -->
+            <div *ngIf="field.type === 'text'">
+              <label [for]="field.id" class="form-label">{{ field.label }}</label>
+              <input 
+                type="text" 
+                [id]="field.id" 
+                [formControlName]="field.id"
+                class="form-control" 
+                [placeholder]="field.placeholder || ''"
+                [ngClass]="{'is-invalid': dynamicForm.get(field.id)?.invalid && dynamicForm.get(field.id)?.touched}">
+              <div class="invalid-feedback">
+                {{ getErrorMessage(field.id, field.validations) }}
+              </div>
+            </div>
+            
+            <!-- Textarea -->
+            <div *ngIf="field.type === 'textarea'">
+              <label [for]="field.id" class="form-label">{{ field.label }}</label>
+              <textarea 
+                [id]="field.id" 
+                [formControlName]="field.id"
+                class="form-control" 
+                [placeholder]="field.placeholder || ''"
+                rows="3"
+                [ngClass]="{'is-invalid': dynamicForm.get(field.id)?.invalid && dynamicForm.get(field.id)?.touched}"></textarea>
+              <div class="invalid-feedback">
+                {{ getErrorMessage(field.id, field.validations) }}
+              </div>
+            </div>
+            
+            <!-- Dropdown -->
+            <div *ngIf="field.type === 'dropdown'">
+              <label [for]="field.id" class="form-label">{{ field.label }}</label>
+              <select 
+                [id]="field.id" 
+                [formControlName]="field.id"
+                class="form-select"
+                [ngClass]="{'is-invalid': dynamicForm.get(field.id)?.invalid && dynamicForm.get(field.id)?.touched}">
+                <option value="">{{ field.placeholder || 'Select an option' }}</option>
+                <option *ngFor="let option of field.options" [value]="option.value">{{ option.label }}</option>
+              </select>
+              <div class="invalid-feedback">
+                {{ getErrorMessage(field.id, field.validations) }}
+              </div>
+            </div>
+            
+            <!-- Checkbox -->
+            <div *ngIf="field.type === 'checkbox'">
+              <label class="form-label d-block">{{ field.label }}</label>
+              <div *ngFor="let option of field.options" class="form-check">
+                <input 
+                  type="checkbox" 
+                  [id]="field.id + '-' + option.value" 
+                  [value]="option.value"
+                  [formControlName]="field.id"
+                  class="form-check-input"
+                  [ngClass]="{'is-invalid': dynamicForm.get(field.id)?.invalid && dynamicForm.get(field.id)?.touched}">
+                <label 
+                  class="form-check-label" 
+                  [for]="field.id + '-' + option.value">
+                  {{ option.label }}
+                </label>
+              </div>
+              <div class="invalid-feedback d-block" *ngIf="dynamicForm.get(field.id)?.invalid && dynamicForm.get(field.id)?.touched">
+                {{ getErrorMessage(field.id, field.validations) }}
+              </div>
+            </div>
+            
+            <!-- Radio Button -->
+            <div *ngIf="field.type === 'radio'">
+              <label class="form-label d-block">{{ field.label }}</label>
+              <div *ngFor="let option of field.options" class="form-check">
+                <input 
+                  type="radio" 
+                  [id]="field.id + '-' + option.value" 
+                  [value]="option.value"
+                  [formControlName]="field.id"
+                  class="form-check-input"
+                  [ngClass]="{'is-invalid': dynamicForm.get(field.id)?.invalid && dynamicForm.get(field.id)?.touched}">
+                <label 
+                  class="form-check-label" 
+                  [for]="field.id + '-' + option.value">
+                  {{ option.label }}
+                </label>
+              </div>
+              <div class="invalid-feedback d-block" *ngIf="dynamicForm.get(field.id)?.invalid && dynamicForm.get(field.id)?.touched">
+                {{ getErrorMessage(field.id, field.validations) }}
+              </div>
+            </div>
+            
+            <!-- Remove Field Button -->
+            <button 
+              type="button" 
+              class="btn btn-sm btn-danger position-absolute top-0 end-0"
+              (click)="removeField(field.id)">
+              ×
+            </button>
+          </div>
+          
+          <div class="d-grid gap-2 col-6 mx-auto mt-4">
+            <button 
+              type="submit" 
+              class="btn btn-primary" 
+              [disabled]="dynamicForm.invalid">
+              Submit Form
+            </button>
+          </div>
+        </form>
+        
+        <!-- Success Alert -->
+        <div *ngIf="formSubmitted" class="alert alert-success mt-3">
+          <h5>Form Successfully Submitted!</h5>
+          <p>Check the console for form data.</p>
+          <pre>{{ formData | json }}</pre>
+        </div>
+      </div>
+    </div>
+  </div>
+  
